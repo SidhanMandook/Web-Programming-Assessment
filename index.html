@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Digital Library</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header>
+
+  <h1>📚 My Library</h1>
+
+  <button id="showAll">📚 All Books</button>
+<button id="showFav">❤️ Favorites</button>
+
+  <div class="controls">
+    <input type="text" id="search" placeholder="Search books...">
+    
+    <select id="filter">
+      <option value="all">All Genres</option>
+      <option value="fiction">Fiction</option>
+      <option value="tech">Tech</option>
+    </select>
+
+    <button id="toggleTheme">🌙</button>
+  </div>
+</header>
+
+<main id="bookContainer"></main>
+
+<!-- Modal -->
+<div id="modal" class="hidden">
+  <div class="modal-content">
+    <span id="close">&times;</span>
+    <img id="modalImg">
+    <h2 id="modalTitle"></h2>
+    <p id="modalAuthor"></p>
+    <p id="modalDesc"></p>
+    <button id="favBtn">❤️ Add to Favorites</button>
+  </div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

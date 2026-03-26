@@ -1,0 +1,121 @@
+:root {
+  --bg: #f4f6f9;
+  --card: #ffffff;
+  --text: #2c3e50;
+  --accent: #4a90e2;
+}
+
+body.dark {
+  --bg: #1e1e2f;
+  --card: #2a2a40;
+  --text: #f1f1f1;
+}
+
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* HEADER */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background: linear-gradient(135deg, #2c3e50, #4a90e2);
+  color: white;
+}
+
+.controls {
+  display: flex;
+  gap: 10px;
+}
+
+input, select {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+}
+
+button {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  background: white;
+  cursor: pointer;
+}
+
+/* GRID */
+#bookContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+/* BOOK CARD */
+.book {
+  background: var(--card);
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.book:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.book img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.book-content {
+  padding: 15px;
+}
+
+.book h3 {
+  margin: 0;
+}
+
+.book p {
+  margin: 5px 0 0;
+  color: gray;
+}
+
+/* MODAL */
+#modal {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  top: 0;
+  left: 0;
+}
+
+.modal-content {
+  background: var(--card);
+  padding: 20px;
+  border-radius: 15px;
+  width: 320px;
+  margin: 5% auto;
+  text-align: center;
+}
+
+.modal-content img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.hidden {
+  display: none;
+}
+header button {
+  font-weight: bold;
+}
