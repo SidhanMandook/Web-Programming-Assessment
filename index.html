@@ -2,45 +2,106 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Digital Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<header>
-
-  <h1>📚 My Library</h1>
-
-  <button id="showAll">📚 All Books</button>
-<button id="showFav">❤️ Favorites</button>
-
-  <div class="controls">
-    <input type="text" id="search" placeholder="Search books...">
-    
-    <select id="filter">
-      <option value="all">All Genres</option>
-      <option value="fiction">Fiction</option>
-      <option value="tech">Tech</option>
-    </select>
-
-    <button id="toggleTheme">🌙</button>
+  <div id="loginPage" class="login-page">
+    <div class="login-container">
+      <h2>Welcome, Sidhan</h2>
+      <p>Please enter your passcode to access the vault.</p>
+      <form id="loginForm">
+        <div class="input-group">
+          <label for="password">Passcode</label>
+          <input type="password" id="password" required>
+        </div>
+        <p id="loginError" class="error-msg hidden">Incorrect password.</p>
+        
+        <button type="submit" class="action-btn primary-btn">Unlock</button>
+      </form>
+    </div>
   </div>
-</header>
 
-<main id="bookContainer"></main>
+  <div id="mainApp" class="hidden">
+    <header class="navbar">
+      <div class="brand">
+        <h1>My Library</h1>
+      </div>
+      
+      <nav class="nav-links">
+        <button id="showDashboard" class="nav-btn">Dashboard</button>
+        <button id="showAll" class="nav-btn active">All Books</button>
+        <button id="showFav" class="nav-btn">Favorites</button>
+      </nav>
 
-<!-- Modal -->
-<div id="modal" class="hidden">
-  <div class="modal-content">
-    <span id="close">&times;</span>
-    <img id="modalImg">
-    <h2 id="modalTitle"></h2>
-    <p id="modalAuthor"></p>
-    <p id="modalDesc"></p>
-    <button id="favBtn">❤️ Add to Favorites</button>
+      <div class="controls">
+        <input type="text" id="search" class="search-input" placeholder="Search books...">
+        
+        <select id="filter" class="filter-select">
+          <option value="all">All Genres</option>
+          <option value="fiction">Fiction</option>
+          <option value="tech">Tech</option>
+        </select>
+
+        <button id="toggleTheme" class="icon-btn">Dark Mode</button>
+        <button id="signOutBtn" class="login-btn">Sign Out</button>
+      </div>
+    </header>
+
+    <main id="dashboardPage" class="hidden page-container">
+      <div class="dashboard-header">
+        <h2>Your Reading Analytics</h2>
+        <p>A breakdown of your library statistics.</p>
+      </div>
+      
+      <div class="stats-grid">
+        <div class="stat-card">
+          <h3>Total Books</h3>
+          <p class="stat-number">16</p>
+        </div>
+        <div class="stat-card">
+          <h3>Reading Streak</h3>
+          <p class="stat-number">12 Days</p>
+        </div>
+        <div class="stat-card">
+          <h3>Top Genre</h3>
+          <p class="stat-number">Tech</p>
+        </div>
+      </div>
+
+      <div class="recent-activity">
+        <h3>Recent Activity</h3>
+        <ul class="activity-list">
+          <li>Added <strong>Dune</strong> to Favorites</li>
+          <li>Finished reading <strong>Clean Code</strong></li>
+          <li>Added <strong>Cosmos</strong> to Library</li>
+        </ul>
+      </div>
+    </main>
+
+    <main id="bookContainer" class="grid-container"></main>
   </div>
-</div>
 
-<script src="script.js"></script>
+  <div id="modal" class="modal-overlay hidden">
+    <div class="modal-content" id="modalContent">
+      <button id="close" class="close-btn">&times;</button>
+      <div class="modal-body">
+        <img id="modalImg" alt="Book Cover">
+        <div class="modal-info">
+          <h2 id="modalTitle"></h2>
+          <p id="modalAuthor" class="author-text"></p>
+          <p id="modalDesc" class="desc-text"></p>
+          <button id="favBtn" class="action-btn">Add to Favorites</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
