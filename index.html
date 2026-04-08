@@ -21,7 +21,6 @@
           <input type="password" id="password" required>
         </div>
         <p id="loginError" class="error-msg hidden">Incorrect password.</p>
-        
         <button type="submit" class="action-btn primary-btn">Unlock</button>
       </form>
     </div>
@@ -37,17 +36,17 @@
         <button id="showDashboard" class="nav-btn">Dashboard</button>
         <button id="showAll" class="nav-btn active">All Books</button>
         <button id="showFav" class="nav-btn">Favorites</button>
+        <button id="showReviews" class="nav-btn">Reviews</button>
+        <button id="showFocus" class="nav-btn">Focus Room</button>
       </nav>
 
       <div class="controls">
         <input type="text" id="search" class="search-input" placeholder="Search books...">
-        
         <select id="filter" class="filter-select">
           <option value="all">All Genres</option>
           <option value="fiction">Fiction</option>
           <option value="tech">Tech</option>
         </select>
-
         <button id="toggleTheme" class="icon-btn">Dark Mode</button>
         <button id="signOutBtn" class="login-btn">Sign Out</button>
       </div>
@@ -62,29 +61,78 @@
       <div class="stats-grid">
         <div class="stat-card">
           <h3>Total Books</h3>
-          <p class="stat-number">16</p>
+          <p class="stat-number" id="totalBooksStat">0</p>
         </div>
         <div class="stat-card">
           <h3>Reading Streak</h3>
           <p class="stat-number">12 Days</p>
         </div>
         <div class="stat-card">
-          <h3>Top Genre</h3>
-          <p class="stat-number">Tech</p>
+          <h3>Average Rating</h3>
+          <p class="stat-number" id="avgRatingStat">0.0 ★</p>
         </div>
       </div>
 
-      <div class="recent-activity">
-        <h3>Recent Activity</h3>
-        <ul class="activity-list">
-          <li>Added <strong>Dune</strong> to Favorites</li>
-          <li>Finished reading <strong>Clean Code</strong></li>
-          <li>Added <strong>Cosmos</strong> to Library</li>
-        </ul>
+      <div class="chart-section">
+        <div class="chart-card">
+          <h3>Library Composition (By Genre)</h3>
+          <div class="bar-chart">
+            <div class="bar-column">
+              <div class="bar-track">
+                <div class="bar-fill" id="techBar"></div>
+              </div>
+              <p class="bar-label">Tech (<span id="techCount">0</span>)</p>
+            </div>
+            <div class="bar-column">
+              <div class="bar-track">
+                <div class="bar-fill" id="ficBar"></div>
+              </div>
+              <p class="bar-label">Fiction (<span id="ficCount">0</span>)</p>
+            </div>
+          </div>
+        </div>
       </div>
     </main>
 
     <main id="bookContainer" class="grid-container"></main>
+
+    <main id="reviewsPage" class="hidden page-container">
+      <div class="dashboard-header">
+        <h2>Community Reviews</h2>
+        <p>See what others are saying about your collection.</p>
+      </div>
+      <div id="reviewsContainer" class="reviews-grid"></div>
+    </main>
+
+    <main id="focusPage" class="hidden page-container focus-room">
+      <div class="focus-breathing-light"></div>
+      <div class="focus-content">
+        <h2>Deep Work Session</h2>
+        <input type="text" class="focus-task-input" placeholder="What are you focusing on today?">
+        
+        <div class="timer-display" id="timerDisplay">25:00</div>
+        
+        <div class="timer-controls">
+          <button id="startTimer" class="action-btn">Start</button>
+          <button id="pauseTimer" class="action-btn">Pause</button>
+          <button id="resetTimer" class="action-btn">Reset</button>
+        </div>
+
+        <div class="focus-modes">
+          <button id="modeWork" class="focus-mode-btn active">Pomodoro (25m)</button>
+          <button id="modeBreak" class="focus-mode-btn">Short Break (5m)</button>
+        </div>
+
+        <div class="ambient-sounds">
+          <h3>Ambient Audio</h3>
+          <div class="sound-toggles">
+            <button class="sound-btn">🌧️ Rain</button>
+            <button class="sound-btn">🔥 Fireplace</button>
+            <button class="sound-btn">☕ Cafe</button>
+          </div>
+        </div>
+      </div>
+    </main>
   </div>
 
   <div id="modal" class="modal-overlay hidden">
