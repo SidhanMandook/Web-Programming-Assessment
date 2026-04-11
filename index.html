@@ -3,92 +3,125 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Digital Library</title>
+  <title>The Nexus</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,600;1,600&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <div id="loginPage" class="login-page">
-    <div class="login-container">
-      <h2>Welcome, Sidhan</h2>
-      <p>Please enter your passcode to access the vault.</p>
-      <form id="loginForm">
-        <div class="input-group">
-          <label for="password">Passcode</label>
-          <input type="password" id="password" required>
+    <div class="login-split">
+      <div class="login-image-side">
+        <div class="login-quote">
+          <h3>"A room without books is like a body without a soul."</h3>
+          <p>— Marcus Tullius Cicero</p>
         </div>
-        <p id="loginError" class="error-msg hidden">Incorrect password.</p>
-        <button type="submit" class="action-btn primary-btn">Unlock</button>
-      </form>
+      </div>
+      <div class="login-form-side">
+        <div class="login-form-header">
+          <h2>Welcome, Sidhan</h2>
+          <p>Please enter your passcode to access The Nexus.</p>
+        </div>
+        <form id="loginForm">
+          <div class="input-group">
+            <label for="password">Passcode</label>
+            <input type="password" id="password" required>
+          </div>
+          <p id="loginError" class="error-msg hidden">Incorrect password.</p>
+          <button type="submit" class="action-btn primary-btn">Unlock</button>
+        </form>
+      </div>
     </div>
   </div>
 
   <div id="mainApp" class="hidden">
-    <header class="navbar">
+    
+    <nav class="navbar">
       <div class="brand">
-        <h1>My Library</h1>
+        <h1>The Nexus</h1>
       </div>
       
-      <nav class="nav-links">
+      <div class="nav-links">
         <button id="showDashboard" class="nav-btn">Dashboard</button>
         <button id="showAll" class="nav-btn active">All Books</button>
         <button id="showFav" class="nav-btn">Favorites</button>
         <button id="showReviews" class="nav-btn">Reviews</button>
         <button id="showFocus" class="nav-btn">Focus Room</button>
-      </nav>
+      </div>
 
       <div class="controls">
-        <input type="text" id="search" class="search-input" placeholder="Search books...">
         <select id="filter" class="filter-select">
           <option value="all">All Genres</option>
           <option value="fiction">Fiction</option>
           <option value="tech">Tech</option>
+          <option value="fantasy">Fantasy</option>
+          <option value="history">History</option>
+          <option value="biography">Biography</option>
         </select>
         <button id="toggleTheme" class="icon-btn">Dark Mode</button>
         <button id="signOutBtn" class="login-btn">Sign Out</button>
       </div>
+    </nav>
+
+    <header id="heroBanner" class="hero-section">
+      <div class="hero-content">
+        <p class="subtitle">Accelerating research discovery to shape a better future</p>
+        <h2 class="title">Today's research, tomorrow's innovation</h2>
+        
+        <div class="search-container">
+          <input type="text" id="heroSearch" placeholder="Search publications, articles, keywords, etc." class="hero-search-input">
+          <button class="hero-search-btn">🔍</button>
+        </div>
+      </div>
     </header>
 
     <main id="dashboardPage" class="hidden page-container">
-      <div class="dashboard-header">
-        <h2>Your Reading Analytics</h2>
-        <p>A breakdown of your library statistics.</p>
+      <div class="dashboard-banner" style="background-image: url('dash-header.jpg');">
+        <div class="banner-overlay">
+          <h2>Reading Analytics</h2>
+          <p>Visualizing your journey through the Nexus.</p>
+        </div>
       </div>
       
       <div class="stats-grid">
         <div class="stat-card">
-          <h3>Total Books</h3>
+          <h3>Books Read</h3>
           <p class="stat-number" id="totalBooksStat">0</p>
+          <span class="stat-change">+2 this week</span>
         </div>
         <div class="stat-card">
-          <h3>Reading Streak</h3>
-          <p class="stat-number">12 Days</p>
+          <h3>Reading Goal</h3>
+          <p class="stat-number">20/50</p>
+          <div class="goal-bar"><div class="goal-progress" style="width: 40%;"></div></div>
         </div>
         <div class="stat-card">
-          <h3>Average Rating</h3>
+          <h3>Reading Speed</h3>
+          <p class="stat-number">42 <small style="font-size: 1rem; color: var(--text-secondary);">pg/hr</small></p>
+          <span class="stat-change">Top 10% of users</span>
+        </div>
+        <div class="stat-card">
+          <h3>Avg Rating</h3>
           <p class="stat-number" id="avgRatingStat">0.0 ★</p>
         </div>
       </div>
 
-      <div class="chart-section">
+      <div class="charts-grid">
+        <div class="chart-card large">
+          <h3>Reading Activity (Last 6 Months)</h3>
+          <canvas id="activityChart"></canvas>
+        </div>
         <div class="chart-card">
-          <h3>Library Composition (By Genre)</h3>
-          <div class="bar-chart">
-            <div class="bar-column">
-              <div class="bar-track">
-                <div class="bar-fill" id="techBar"></div>
-              </div>
-              <p class="bar-label">Tech (<span id="techCount">0</span>)</p>
-            </div>
-            <div class="bar-column">
-              <div class="bar-track">
-                <div class="bar-fill" id="ficBar"></div>
-              </div>
-              <p class="bar-label">Fiction (<span id="ficCount">0</span>)</p>
-            </div>
+          <h3>Genre Distribution</h3>
+          <canvas id="genreChart"></canvas>
+        </div>
+        <div class="chart-card">
+          <h3>Estimated Time Spent</h3>
+          <div class="time-display">
+            <p class="big-time">142<span>hrs</span></p>
+            <p class="sub-time" style="color: var(--text-secondary); margin-top: 0.5rem;">Across all titles</p>
           </div>
         </div>
       </div>
