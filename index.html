@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sreenivas Electronics – Thalassery</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Lato', sans-serif; color: #222; background: #fff; line-height: 1.6; }
+
+    /* ── COLOURS ── */
+    :root {
+      --green:      #1a2e1a;
+      --green-mid:  #2d4a2d;
+      --gold:       #e8d5a3;
+      --gold-dark:  #c8b070;
+      --light-bg:   #f7f6f2;
+      --border:     #e0ddd5;
+      --text-muted: #666;
+      --text-light: #999;
+    }
+
+    /* ── TOP BAR ── */
+    .topbar {
+      background: var(--gold);
+      padding: 7px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: #3a3a22;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .topbar a { color: #3a3a22; text-decoration: none; font-weight: 700; }
+    .topbar a:hover { text-decoration: underline; }
+    .topbar-right { display: flex; gap: 20px; align-items: center; font-size: 12px; }
+    .topbar-right a { color: #3a3a22; text-decoration: none; }
+    .topbar-right a:hover { text-decoration: underline; }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--green);
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 64px;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+    .nav-brand {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.15;
+      text-decoration: none;
+    }
+    .nav-brand .abbr { font-family: 'Playfair Display', serif; font-size: 22px; color: var(--gold); letter-spacing: 1px; }
+    .nav-brand .full  { font-size: 11px; color: #a0b8a0; letter-spacing: 0.5px; text-transform: uppercase; }
+    .nav-links { display: flex; gap: 0; list-style: none; height: 64px; }
+    .nav-links li a {
+      display: flex;
+      align-items: center;
+      height: 100%;
+      padding: 0 16px;
+      color: #ccc;
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      transition: color 0.2s, background 0.2s;
+    }
+    .nav-links li a:hover { color: var(--gold); background: rgba(255,255,255,0.05); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 8px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--gold); border-radius: 2px; transition: 0.3s; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, #1a2e1a 0%, #2d4a2d 55%, #3d5c3d 100%);
+      padding: 80px 40px;
+      display: flex;
+      align-items: center;
+      gap: 52px;
+      min-height: 440px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 500px; height: 500px; border-radius: 50%;
+      border: 70px solid rgba(232,213,163,0.05);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -100px; left: 25%;
+      width: 340px; height: 340px; border-radius: 50%;
+      border: 50px solid rgba(232,213,163,0.04);
+      pointer-events: none;
+    }
+    .hero-text { flex: 1; z-index: 1; }
+    .hero-eyebrow {
+      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 14px;
+    }
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 48px; color: #fff; line-height: 1.15; margin-bottom: 20px;
+    }
+    .hero-title em { color: var(--gold); font-style: normal; }
+    .hero-sub { color: #a8c4a8; font-size: 15px; max-width: 500px; margin-bottom: 32px; line-height: 1.75; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--gold); color: var(--green);
+      padding: 13px 30px; font-size: 13px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      border: 2px solid var(--gold); cursor: pointer; border-radius: 2px;
+      text-decoration: none; display: inline-block;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .btn-primary:hover { background: var(--gold-dark); border-color: var(--gold-dark); }
+    .btn-outline {
+      border: 2px solid var(--gold); color: var(--gold);
+      padding: 13px 30px; font-size: 13px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      background: transparent; cursor: pointer; border-radius: 2px;
+      text-decoration: none; display: inline-block;
+      transition: background 0.2s;
+    }
+    .btn-outline:hover { background: rgba(232,213,163,0.12); }
+    .hero-image-box {
+      flex: 0 0 340px; height: 280px;
+      border: 2px solid rgba(232,213,163,0.2); border-radius: 6px;
+      background: rgba(255,255,255,0.04);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      color: rgba(232,213,163,0.35); font-size: 13px; gap: 12px; z-index: 1;
+    }
+    .hero-image-box svg { width: 52px; height: 52px; stroke: rgba(232,213,163,0.3); fill: none; }
+    /* → REPLACE hero-image-box with:
+       <img src="your-hero-image.jpg" style="flex:0 0 340px;height:280px;object-fit:cover;border-radius:6px;z-index:1;"> */
+
+    /* ── SECTION WRAPPER ── */
+    .section-title { text-align: center; padding: 56px 40px 28px; }
+    .section-title h2 { font-family: 'Playfair Display', serif; font-size: 34px; color: var(--green); }
+    .section-title p  { color: var(--text-muted); font-size: 14px; margin-top: 8px; }
+    .divider { width: 56px; height: 3px; background: var(--gold); border: none; margin: 14px auto 0; }
+
+    /* ── SERVICES ── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      padding: 0 40px 56px;
+    }
+    .service-card {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 30px 24px;
+      background: #fff;
+      transition: box-shadow 0.25s, transform 0.25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .service-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--gold);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.3s;
+    }
+    .service-card:hover { box-shadow: 0 8px 28px rgba(0,0,0,0.09); transform: translateY(-3px); }
+    .service-card:hover::before { transform: scaleX(1); }
+    .service-icon {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--green); display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px;
+    }
+    .service-icon svg { width: 26px; height: 26px; stroke: var(--gold); fill: none; }
+    .service-card h3 { font-size: 16px; font-weight: 700; color: var(--green); margin-bottom: 10px; }
+    .service-card p  { font-size: 13px; color: var(--text-muted); line-height: 1.75; }
+
+    /* ── IMAGE PLACEHOLDER (reusable) ── */
+    .img-placeholder {
+      background: var(--light-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      color: var(--text-light); font-size: 12px; gap: 10px;
+    }
+    .img-placeholder svg { stroke: #ccc; fill: none; }
+
+    /* ── ABOUT ── */
+    .about-section {
+      background: var(--light-bg);
+      display: flex; gap: 56px;
+      padding: 64px 40px;
+      align-items: center;
+    }
+    .about-img { flex: 0 0 380px; height: 300px; }
+    /* → REPLACE about-img div with:
+       <img src="your-about.jpg" style="flex:0 0 380px;height:300px;object-fit:cover;border-radius:6px;"> */
+    .about-text h2 { font-family: 'Playfair Display', serif; font-size: 32px; color: var(--green); margin-bottom: 18px; }
+    .about-text p  { color: #555; font-size: 14px; line-height: 1.85; }
+
+    /* ── WHY US ── */
+    .why-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      padding: 0 40px 56px;
+    }
+    .why-card {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 28px 20px;
+      background: #fff;
+      text-align: center;
+      transition: box-shadow 0.25s, transform 0.25s;
+    }
+    .why-card:hover { box-shadow: 0 6px 22px rgba(0,0,0,0.08); transform: translateY(-2px); }
+    .why-icon {
+      width: 60px; height: 60px; border-radius: 50%;
+      background: var(--green); margin: 0 auto 16px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .why-icon svg { width: 28px; height: 28px; stroke: var(--gold); fill: none; }
+    .why-card h3 { font-size: 15px; font-weight: 700; color: var(--green); }
+
+    /* ── GALLERY ── */
+    .gallery-section { padding: 0 40px 56px; }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    .gallery-item {
+      height: 160px; border-radius: 6px; cursor: pointer;
+      overflow: hidden; position: relative;
+    }
+    .gallery-item .img-placeholder { height: 100%; }
+    .gallery-item .img-placeholder svg { width: 32px; height: 32px; }
+    /* → REPLACE each gallery-item inner div with:
+       <img src="gallery-N.jpg" style="width:100%;height:100%;object-fit:cover;"> */
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-section { background: var(--light-bg); padding: 56px 40px; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 8px; }
+    .testimonial-card {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 6px; padding: 28px 24px;
+    }
+    .stars { color: #f4a820; font-size: 18px; margin-bottom: 12px; letter-spacing: 2px; }
+    .testimonial-card p { font-size: 14px; color: #555; line-height: 1.75; font-style: italic; margin-bottom: 16px; }
+    .testimonial-author { font-size: 13px; font-weight: 700; color: var(--green); }
+    .testimonial-location { font-size: 12px; color: var(--text-muted); }
+    .jd-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #fff3cd; border: 1px solid #f4a820;
+      border-radius: 20px; padding: 6px 16px;
+      font-size: 13px; font-weight: 700; color: #c47a00;
+      margin: 0 auto 28px; display: table;
+    }
+
+    /* ── CONTACT STRIP ── */
+    .contact-strip {
+      background: var(--green);
+      padding: 44px 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 24px;
+    }
+    .contact-strip h3 { font-family: 'Playfair Display', serif; color: #fff; font-size: 28px; }
+    .contact-strip p  { color: #8aaa8a; font-size: 14px; margin-top: 6px; }
+    .strip-details { display: flex; gap: 32px; align-items: center; flex-wrap: wrap; }
+    .strip-item { display: flex; align-items: center; gap: 10px; color: var(--gold); font-size: 14px; }
+    .strip-item svg { width: 22px; height: 22px; stroke: var(--gold); fill: none; flex-shrink: 0; }
+    .strip-item a { color: var(--gold); text-decoration: none; }
+    .strip-item a:hover { text-decoration: underline; }
+
+    /* ── CONTACT SECTION ── */
+    .contact-section { padding: 64px 40px; background: #fff; }
+    .contact-inner {
+      max-width: 1000px; margin: 0 auto;
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 56px;
+    }
+    .contact-form h2 { font-family: 'Playfair Display', serif; font-size: 28px; color: var(--green); margin-bottom: 6px; }
+    .contact-form > p { color: var(--text-muted); font-size: 13px; margin-bottom: 28px; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #555; margin-bottom: 6px; }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%; padding: 11px 14px;
+      border: 1px solid #ddd; border-radius: 3px;
+      font-family: 'Lato', sans-serif; font-size: 14px;
+      color: #222; background: #fff;
+      transition: border-color 0.2s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus { outline: none; border-color: var(--green-mid); }
+    .form-group textarea { height: 110px; resize: vertical; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .submit-btn {
+      width: 100%; padding: 14px;
+      background: var(--green); color: var(--gold);
+      font-family: 'Lato', sans-serif; font-size: 14px; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px;
+      border: none; border-radius: 3px; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .submit-btn:hover { background: var(--green-mid); }
+
+    .contact-info h3 { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--green); margin-bottom: 24px; }
+    .info-item { display: flex; gap: 16px; margin-bottom: 24px; }
+    .info-item svg { width: 22px; height: 22px; stroke: var(--green-mid); fill: none; flex-shrink: 0; margin-top: 3px; }
+    .info-item h4 { font-size: 13px; font-weight: 700; color: var(--green); margin-bottom: 4px; }
+    .info-item p, .info-item a { font-size: 13px; color: var(--text-muted); line-height: 1.7; text-decoration: none; display: block; }
+    .info-item a:hover { color: var(--green); }
+    .map-wrap {
+      margin-top: 24px; border: 1px solid var(--border);
+      border-radius: 6px; overflow: hidden; height: 200px;
+    }
+    .map-wrap iframe { width: 100%; height: 100%; border: none; display: block; }
+
+    /* ── FOOTER ── */
+    footer { background: #111d11; padding: 52px 40px 20px; }
+    .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 40px; margin-bottom: 40px; }
+    .footer-brand { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--gold); margin-bottom: 12px; }
+    footer p, footer li, footer address { font-size: 13px; color: #5a7a5a; line-height: 1.85; font-style: normal; }
+    footer h4 { font-size: 12px; color: #8a9a8a; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 16px; }
+    footer ul { list-style: none; }
+    footer ul li { margin-bottom: 8px; }
+    footer ul li a { color: #5a7a5a; text-decoration: none; transition: color 0.2s; }
+    footer ul li a:hover { color: var(--gold); }
+    .footer-bottom {
+      border-top: 1px solid #1e301e; padding-top: 18px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 12px;
+      font-size: 12px; color: #3a5a3a;
+    }
+    .footer-bottom a { color: #3a5a3a; text-decoration: none; }
+    .footer-bottom a:hover { color: var(--gold); }
+
+    /* ── LANGUAGE SWITCHER ── */
+    .lang-switcher { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .lang-switcher span { font-size: 12px; color: #5a7a5a; }
+    .lang-btn {
+      background: transparent; border: 1px solid #2a4a2a;
+      color: #5a7a5a; font-size: 11px; padding: 3px 10px;
+      border-radius: 20px; cursor: pointer; transition: 0.2s;
+      font-family: 'Lato', sans-serif;
+    }
+    .lang-btn:hover, .lang-btn.active { background: var(--green-mid); color: var(--gold); border-color: var(--green-mid); }
+
+    /* ── JD RATING BUBBLE ── */
+    .jd-float {
+      position: fixed; bottom: 24px; right: 24px; z-index: 300;
+      background: #fff; border: 2px solid #f4a820;
+      border-radius: 50px; padding: 10px 18px;
+      display: flex; align-items: center; gap: 8px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+      text-decoration: none; font-size: 14px; font-weight: 700; color: #c47a00;
+      transition: box-shadow 0.2s;
+    }
+    .jd-float:hover { box-shadow: 0 6px 28px rgba(0,0,0,0.22); }
+    .jd-float .star { color: #f4a820; font-size: 18px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .services-grid { grid-template-columns: repeat(2, 1fr); }
+      .why-grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      .topbar { padding: 6px 20px; font-size: 12px; }
+      nav { padding: 0 20px; }
+      .nav-links { display: none; flex-direction: column; position: absolute; top: 64px; left: 0; right: 0; background: var(--green); height: auto; }
+      .nav-links.open { display: flex; }
+      .nav-links li a { height: 48px; padding: 0 24px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+      .hamburger { display: flex; }
+      .hero { flex-direction: column; padding: 48px 20px; gap: 32px; }
+      .hero-title { font-size: 34px; }
+      .hero-image-box { flex: none; width: 100%; }
+      .section-title { padding: 44px 20px 20px; }
+      .services-grid, .why-grid { padding: 0 20px 40px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .about-section { flex-direction: column; padding: 48px 20px; gap: 32px; }
+      .about-img { flex: none; width: 100%; height: 220px; }
+      .contact-inner { grid-template-columns: 1fr; gap: 36px; }
+      .contact-section { padding: 48px 20px; }
+      .contact-strip { padding: 32px 20px; }
+      .gallery-section { padding: 0 20px 40px; }
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+      .testimonials-section { padding: 40px 20px; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      footer { padding: 40px 20px 16px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .why-grid { grid-template-columns: repeat(2, 1fr); padding: 0 20px 40px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .hero-title { font-size: 28px; }
+      .why-grid { grid-template-columns: 1fr; }
+      .strip-details { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .footer-bottom { font-size: 11px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ TOP BAR ══ -->
+  <div class="topbar">
+    <div>
+      <a href="tel:+919249950505">📞 +91-9249950505</a>
+      &nbsp;|&nbsp;
+      <a href="mailto:sreenivas.tatasky@gmail.com">✉ sreenivas.tatasky@gmail.com</a>
+      &nbsp;|&nbsp;
+      📍 Thalassery
+    </div>
+    <div class="topbar-right">
+      <a href="#">Log In</a>
+      <span>|</span>
+      <a href="#">Sign Up</a>
+    </div>
+  </div>
+
+  <!-- ══ NAV ══ -->
+  <nav id="mainNav">
+    <a href="#" class="nav-brand">
+      <span class="abbr">SE</span>
+      <span class="full">Sreenivas Electronics</span>
+    </a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#">Home</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#about">About Us</a></li>
+      <li><a href="#why">Why Us</a></li>
+      <li><a href="#gallery">Gallery</a></li>
+      <li><a href="#testimonials">Testimonials</a></li>
+      <li><a href="#contact">Contact Us</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Toggle navigation">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- ══ HERO ══ -->
+  <section class="hero">
+    <div class="hero-text">
+      <p class="hero-eyebrow">Thalassery's Leading Electronics Dealer</p>
+      <h1 class="hero-title">Services And Products<br><em>You Will Love</em></h1>
+      <p class="hero-sub">
+        We are leading dealers of electronics and appliances of various brands at the most affordable rates — backed by expert consultation, installation, delivery, and AMC services.
+      </p>
+      <div class="hero-actions">
+        <a href="#services" class="btn-primary">Our Services</a>
+        <a href="#contact" class="btn-outline">Contact Us</a>
+      </div>
+    </div>
+    <!-- REPLACE THIS DIV WITH YOUR HERO IMAGE:
+         <img src="hero.jpg" style="flex:0 0 340px;height:280px;object-fit:cover;border-radius:6px;z-index:1;"> -->
+    <div class="hero-image-box img-placeholder">
+      <svg viewBox="0 0 24 24" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <circle cx="8.5" cy="8.5" r="1.5"/>
+        <polyline points="21 15 16 10 5 21"/>
+      </svg>
+      Your hero image here
+    </div>
+  </section>
+
+  <!-- ══ SERVICES ══ -->
+  <section id="services">
+    <div class="section-title">
+      <h2>Our Services</h2>
+      <p>Everything you need — from purchase to long-term support</p>
+      <hr class="divider">
+    </div>
+    <div class="services-grid">
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/>
+          </svg>
+        </div>
+        <h3>Electronic Goods Showrooms</h3>
+        <p>We are leading dealers of electronics and appliances of various brands at the most affordable rates.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+          </svg>
+        </div>
+        <h3>Consultation</h3>
+        <p>Owing to our huge industrial knowledge and rich information, we offer our customers the best consultancy services — available in varied provisions as per the detailed needs of each customer.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/>
+          </svg>
+        </div>
+        <h3>Installation</h3>
+        <p>To meet the growing requirement of our precious consumers, our firm offers reliable Installation Services available in the simplest way. We apply minimal charges for this service.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="3" width="15" height="13" rx="1"/>
+            <path d="M16 8h4l3 3v5h-7V8z"/>
+            <circle cx="5.5" cy="18.5" r="2.5"/>
+            <circle cx="18.5" cy="18.5" r="2.5"/>
+          </svg>
+        </div>
+        <h3>Delivery</h3>
+        <p>We hold expertise in providing doorstep delivery to our customers. By leveraging the breadth and reliability of our network, we make sure to deliver the desired service on stipulated time.</p>
+      </div>
+
+      <div class="service-card">
+        <div class="service-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          </svg>
+        </div>
+        <h3>AMC</h3>
+        <p>We are proficient to render all types of Annual Maintenance Contract (AMC) Service under the guidance of skillful employees. We also customise this service as per the necessities of our respected customers.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ ABOUT ══ -->
+  <section id="about" class="about-section">
+    <!-- REPLACE THIS DIV WITH: <img src="about.jpg" style="flex:0 0 380px;height:300px;object-fit:cover;border-radius:6px;"> -->
+    <div class="about-img img-placeholder">
+      <svg viewBox="0 0 24 24" width="48" height="48" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+        <rect x="3" y="3" width="18" height="18" rx="2"/>
+        <circle cx="8.5" cy="8.5" r="1.5"/>
+        <polyline points="21 15 16 10 5 21"/>
+      </svg>
+      Your showroom / about image
+    </div>
+    <div class="about-text">
+      <h2>About Us</h2>
+      <p>
+        We, <strong>Sreenivas Electronics</strong>, situated at Thalassery, Kerala, are one of the leading firms in the country, set up to cater to the growing requirements in all sectors. We have strengthened the business of our customers through proactive product development, timely delivery and superior product attributes by reinforcing innovation, cost leadership and premium quality.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ WHY US ══ -->
+  <section id="why">
+    <div class="section-title">
+      <h2>Why Us</h2>
+      <p>Reasons our customers keep coming back</p>
+      <hr class="divider">
+    </div>
+    <div class="why-grid">
+
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <h3>Exceptional Staff</h3>
+      </div>
+
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            <polyline points="9 12 11 14 15 10"/>
+          </svg>
+        </div>
+        <h3>Premium Quality</h3>
+      </div>
+
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="1" x2="12" y2="23"/>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+        </div>
+        <h3>Affordable Pricing</h3>
+      </div>
+
+      <div class="why-card">
+        <div class="why-icon">
+          <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <h3>High Industry Standards</h3>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ GALLERY ══ -->
+  <section id="gallery">
+    <div class="section-title">
+      <h2>Gallery</h2>
+      <p>A glimpse into our showroom and products</p>
+      <hr class="divider">
+    </div>
+    <div class="gallery-section">
+      <!-- REPLACE each inner div.img-placeholder with: <img src="gallery-N.jpg" style="width:100%;height:100%;object-fit:cover;"> -->
+      <div class="gallery-grid">
+        <div class="gallery-item"><div class="img-placeholder"><svg viewBox="0 0 24 24" width="32" height="32" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Gallery image</div></div>
+        <div class="gallery-item"><div class="img-placeholder"><svg viewBox="0 0 24 24" width="32" height="32" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Gallery image</div></div>
+        <div class="gallery-item"><div class="img-placeholder"><svg viewBox="0 0 24 24" width="32" height="32" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Gallery image</div></div>
+        <div class="gallery-item"><div class="img-placeholder"><svg viewBox="0 0 24 24" width="32" height="32" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Gallery image</div></div>
+        <div class="gallery-item"><div class="img-placeholder"><svg viewBox="0 0 24 24" width="32" height="32" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Gallery image</div></div>
+        <div class="gallery-item"><div class="img-placeholder"><svg viewBox="0 0 24 24" width="32" height="32" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Gallery image</div></div>
+        <div class="gallery-item"><div class="img-placeholder"><svg viewBox="0 0 24 24" width="32" height="32" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Gallery image</div></div>
+        <div class="gallery-item"><div class="img-placeholder"><svg viewBox="0 0 24 24" width="32" height="32" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>Gallery image</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ TESTIMONIALS ══ -->
+  <section id="testimonials" class="testimonials-section">
+    <div class="section-title" style="padding-top:0;">
+      <h2>Testimonials</h2>
+      <p>What our customers say about us</p>
+      <hr class="divider">
+    </div>
+    <br>
+    <a href="https://www.justdial.com/Thalassery/Sreenivas-Trading-Corporation-Thalassery-Bazar/9999PX490-X490-170813074501-Y8M7_BZDET" target="_blank" class="jd-badge">
+      ★ 4.3 &nbsp;Rated on JustDial
+    </a>
+    <div class="testimonials-grid">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>"Excellent service and great product range. The staff was very helpful in choosing the right TV for our home. Installation was done the same day!"</p>
+        <div class="testimonial-author">Rajesh Kumar</div>
+        <div class="testimonial-location">Thalassery</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p>"Best electronics shop in Thalassery. Prices are very reasonable and the AMC service is top notch. Highly recommended for everyone."</p>
+        <div class="testimonial-author">Priya Nair</div>
+        <div class="testimonial-location">Kannur</div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★☆</div>
+        <p>"Bought a washing machine and refrigerator. Delivery was on time and the installation team was professional. Very happy with the purchase."</p>
+        <div class="testimonial-author">Mohammed Ashraf</div>
+        <div class="testimonial-location">Thalassery</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CONTACT STRIP ══ -->
+  <div class="contact-strip">
+    <div>
+      <h3>Get In Touch With Us</h3>
+      <p>We'd love to hear from you — visit us or send an enquiry</p>
+    </div>
+    <div class="strip-details">
+      <div class="strip-item">
+        <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.77a16 16 0 0 0 5.79 5.79l.86-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.23 16z"/></svg>
+        <a href="tel:+919249950505">+91-9249950505</a>
+      </div>
+      <div class="strip-item">
+        <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        <a href="mailto:sreenivas.tatasky@gmail.com">sreenivas.tatasky@gmail.com</a>
+      </div>
+      <a href="#contact" class="btn-primary">Send Enquiry</a>
+    </div>
+  </div>
+
+  <!-- ══ CONTACT SECTION ══ -->
+  <section id="contact" class="contact-section">
+    <div class="contact-inner">
+
+      <div class="contact-form">
+        <h2>Contact Us</h2>
+        <p>Fill out the form and we'll get back to you shortly.</p>
+        <div class="form-row">
+          <div class="form-group"><label>Your Name</label><input type="text" placeholder="Full name" /></div>
+          <div class="form-group"><label>Phone Number</label><input type="tel" placeholder="+91 00000 00000" /></div>
+        </div>
+        <div class="form-group"><label>Email Address</label><input type="email" placeholder="your@email.com" /></div>
+        <div class="form-group">
+          <label>Service of Interest</label>
+          <select>
+            <option value="">Select a service...</option>
+            <option>Electronic Goods Showrooms</option>
+            <option>Consultation</option>
+            <option>Installation</option>
+            <option>Delivery</option>
+            <option>AMC</option>
+            <option>General Enquiry</option>
+          </select>
+        </div>
+        <div class="form-group"><label>Message</label><textarea placeholder="Tell us about your requirements..."></textarea></div>
+        <button class="submit-btn" type="button">Send Message</button>
+      </div>
+
+      <div class="contact-info">
+        <h3>Our Office Address</h3>
+
+        <div class="info-item">
+          <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <div>
+            <h4>Address</h4>
+            <address>SANGAMAM AUDITORIUM BUILDINGS,<br>Good Shed Road, Near Rly Flyover,<br>Thalassery, Kerala 670101</address>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.77a16 16 0 0 0 5.79 5.79l.86-.86a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.23 16z"/></svg>
+          <div>
+            <h4>Call Us</h4>
+            <a href="tel:+919249950505">+91-9249950505</a>
+            <a href="tel:+919037551800">+91-9037551800</a>
+            <a href="tel:04902342962">0490-2342962</a>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          <div>
+            <h4>General Enquiries</h4>
+            <a href="mailto:sreenivas.tatasky@gmail.com">sreenivas.tatasky@gmail.com</a>
+          </div>
+        </div>
+
+        <div class="info-item">
+          <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <div>
+            <h4>Our Timings</h4>
+            <p>Mon – Sat: 09:00 AM – 08:00 PM</p>
+            <p>Sun: Closed</p>
+          </div>
+        </div>
+
+        <!-- Google Maps embed — replace src with your actual embed URL from Google Maps > Share > Embed a map -->
+        <div class="map-wrap">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3909.2!2d75.4900!3d11.7480!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2sSangamam+Auditorium+Buildings+Thalassery!5e0!3m2!1sen!2sin!4v1"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Sreenivas Electronics location map">
+          </iframe>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ══ FOOTER ══ -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-brand">Sreenivas Electronics</div>
+        <address>
+          SANGAMAM AUDITORIUM BUILDINGS,<br>
+          Good Shed Road, Near Rly Flyover,<br>
+          Thalassery, Thalassery, 670101, Kerala
+        </address>
+        <br>
+        <p><a href="tel:+919249950505" style="color:#5a7a5a;">+91-9249950505</a></p>
+        <p><a href="mailto:sreenivas.tatasky@gmail.com" style="color:#5a7a5a;">sreenivas.tatasky@gmail.com</a></p>
+      </div>
+      <div>
+        <h4>Useful Links</h4>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#why">Why Us</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#testimonials">Testimonials</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Change Language</h4>
+        <div class="lang-switcher">
+          <button class="lang-btn active" onclick="setLang(this)">English</button>
+          <button class="lang-btn" onclick="setLang(this)">हिंदी</button>
+          <button class="lang-btn" onclick="setLang(this)">मराठी</button>
+          <button class="lang-btn" onclick="setLang(this)">বাংলা</button>
+          <button class="lang-btn" onclick="setLang(this)">தமிழ்</button>
+          <button class="lang-btn" onclick="setLang(this)">ગુજરાતી</button>
+          <button class="lang-btn" onclick="setLang(this)">ಕನ್ನಡ</button>
+          <button class="lang-btn" onclick="setLang(this)">മലയാളം</button>
+          <button class="lang-btn" onclick="setLang(this)">తెలుగు</button>
+          <button class="lang-btn" onclick="setLang(this)">ਪੰਜਾਬੀ</button>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© Copyrights 2026 – 2027. Sreenivas Electronics. All Rights Reserved.</span>
+      <div>
+        <a href="#">Privacy Policy</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ══ JD RATING FLOAT ══ -->
+  <a href="https://www.justdial.com/Thalassery/Sreenivas-Trading-Corporation-Thalassery-Bazar/9999PX490-X490-170813074501-Y8M7_BZDET"
+     target="_blank" class="jd-float" title="View on JustDial">
+    <span class="star">★</span> 4.3 on JustDial
+  </a>
+
+  <!-- ══ JAVASCRIPT ══ -->
+  <script>
+    // Mobile nav toggle
+    function toggleMenu() {
+      const links = document.getElementById('navLinks');
+      links.classList.toggle('open');
+    }
+
+    // Close nav when a link is clicked
+    document.querySelectorAll('.nav-links a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        document.getElementById('navLinks').classList.remove('open');
+      });
+    });
+
+    // Active nav highlight on scroll
+    const sections = document.querySelectorAll('section[id], div[id]');
+    const navAnchors = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', function() {
+      let current = '';
+      sections.forEach(function(sec) {
+        if (window.scrollY >= sec.offsetTop - 80) current = sec.getAttribute('id');
+      });
+      navAnchors.forEach(function(a) {
+        a.style.color = '';
+        if (a.getAttribute('href') === '#' + current) a.style.color = '#e8d5a3';
+      });
+    });
+
+    // Language switcher (UI only — hook into i18n library as needed)
+    function setLang(btn) {
+      document.querySelectorAll('.lang-btn').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+      // TODO: implement actual translation logic here
+      console.log('Language selected:', btn.textContent);
+    }
+
+    // Contact form submit
+    document.querySelector('.submit-btn').addEventListener('click', function() {
+      const name  = document.querySelector('input[placeholder="Full name"]').value.trim();
+      const email = document.querySelector('input[type="email"]').value.trim();
+      if (!name || !email) {
+        alert('Please enter your name and email address.');
+        return;
+      }
+      alert('Thank you, ' + name + '! We have received your enquiry and will get back to you shortly.');
+    });
+  </script>
+
+</body>
+</html>
